@@ -39,6 +39,15 @@ class DeveloperController extends Controller
     {
         $developer = new Developer();
         //$developer->image = $request->file('image')->store('developer_images');
+        if($request->hasFile('image'))
+        {
+            $image = $request->file('image');
+            $destination_path = 'public/images/developers';
+            $image_name = $image->getClientOriginalName();
+            $path = $request->file('image')->storeAs($destination_path, $image_name);
+
+            $developer->image = $image_name;
+        }
         $developer->first_name = $request->first_name;
         $developer->last_name = $request->last_name;
         $developer->email = $request->email;

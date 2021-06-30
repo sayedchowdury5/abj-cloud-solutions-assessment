@@ -9,5 +9,5 @@ class Developer extends Model
 {
     use HasFactory;
     protected $table = "developers";
-    protected $fillable = ['first_name', 'last_name', 'email', 'phone_no', 'address'];
+    protected $fillable = ['image', 'first_name', 'last_name', 'email', 'phone_no', 'address'];
 }

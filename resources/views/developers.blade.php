@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container">
+<div>
     <developer-component></developer-component>
 </div>
 

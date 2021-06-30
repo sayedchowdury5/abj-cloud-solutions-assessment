@@ -15,7 +15,7 @@ class CreateDevelopersTable extends Migration
     {
         Schema::create('developers', function (Blueprint $table) {
             $table->id();
-            $table->string('image')->nullable();
+            $table->string('image');
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email');

@@ -1,13 +1,13 @@
 <template>
     <div class="container mt-5">
-        <div class="d-flex justify-content-end">
+        <div class="d-flex">
             <Button class="btn btn-success mb-5" data-toggle="modal" data-target="#addDeveloper">Create Developer</Button>
-            <button class="btn btn-danger ml-2 mb-5" id="deleteAll">Delete All</button>
+            <button class="btn btn-danger ml-auto mb-5" id="deleteAll">Delete All</button>
         </div>
 
         <!-- display all developers list -->
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-sm-12">
                 <div class="table-responsive">
                     <table id="developersTable" class="table table-striped" style="width:100%">
                         <thead>
@@ -27,7 +27,7 @@
                             <tr v-for='(developer, index) in developers' :key='index'>
                                 <td>{{developer.id}}</td>
                                 <td>{{developer.id}}</td>
-                                <td><img :src="'/storage/app/'+developer.image" alt="image"></td>
+                                <td><img :src="'/storage/images/developers/' + developer.image" alt="developer image" class="rounded-circle" width="100" height="100"></td>
                                 <td>{{developer.first_name}}</td>
                                 <td>{{developer.last_name}}</td>
                                 <td>{{developer.email}}</td>
@@ -59,27 +59,28 @@
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div>
-                            <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+                            <!-- <input type="file" id="file" ref="file" v-on:change="handleFileUpload"/> -->
+                            <input type="file" @change="handleFileUpload"/>
                         </div>
                         <div class="row mt-5">
                             <div class="col-sm-2"> First Name</div>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" v-model="add.first_name">
                             </div>
-                            <div class="col-sm-2"> Last Name</div>
-                            <div class="col-sm-10">
+                            <div class="col-sm-2 mt-3"> Last Name</div>
+                            <div class="col-sm-10 mt-3">
                                 <input type="text" class="form-control" v-model="add.last_name">
                             </div>
-                            <div class="col-sm-2"> Email</div>
-                            <div class="col-sm-10">
+                            <div class="col-sm-2 mt-3"> Email</div>
+                            <div class="col-sm-10 mt-3">
                                 <input type="text" class="form-control" v-model="add.email">
                             </div>
-                            <div class="col-sm-2"> Phone No</div>
-                            <div class="col-sm-10">
+                            <div class="col-sm-2 mt-3"> Phone No</div>
+                            <div class="col-sm-10 mt-3">
                                 <input type="text" class="form-control" v-model="add.phone_no">
                             </div>
-                            <div class="col-sm-2"> Address</div>
-                            <div class="col-sm-10">
+                            <div class="col-sm-2 mt-3"> Address</div>
+                            <div class="col-sm-10 mt-3">
                                 <textarea class="form-control" rows="5" v-model="add.address"></textarea>
                             </div>
                         </div>
@@ -108,27 +109,27 @@
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div>
-                            <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+                            <input type="file" id="file" ref="file" v-on:change="handleFileUpload"/>
                         </div>
                         <div class="row mt-5">
                             <div class="col-sm-2"> First Name</div>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" v-model="add.first_name">
                             </div>
-                            <div class="col-sm-2"> Last Name</div>
-                            <div class="col-sm-10">
+                            <div class="col-sm-2 mt-3"> Last Name</div>
+                            <div class="col-sm-10 mt-3">
                                 <input type="text" class="form-control" v-model="add.last_name">
                             </div>
-                            <div class="col-sm-2"> Email</div>
-                            <div class="col-sm-10">
+                            <div class="col-sm-2 mt-3"> Email</div>
+                            <div class="col-sm-10 mt-3">
                                 <input type="text" class="form-control" v-model="add.email">
                             </div>
-                            <div class="col-sm-2"> Phone No</div>
-                            <div class="col-sm-10">
+                            <div class="col-sm-2 mt-3"> Phone No</div>
+                            <div class="col-sm-10 mt-3">
                                 <input type="text" class="form-control" v-model="add.phone_no">
                             </div>
-                            <div class="col-sm-2"> Address</div>
-                            <div class="col-sm-10">
+                            <div class="col-sm-2 mt-3"> Address</div>
+                            <div class="col-sm-10 mt-3">
                                 <textarea class="form-control" rows="5" v-model="add.address"></textarea>
                             </div>
                         </div>
@@ -170,10 +171,10 @@
                 axios.get('http://localhost:8000/api/developers')
                 .then(res => {
                     this.developers = res.data.data;
-                    console.log(this.developers);
+                    //console.log(this.developers);
                 }).then(res => {
                    var table = $("#developersTable").DataTable({
-                        "order": [[ 0, "desc" ]],
+                        "order": [[ 1, "desc" ]],
                         "deferRender": true,
                         "columnDefs": [
                             //{ "searchable": false, "targets": 5 },
@@ -193,35 +194,26 @@
                         ],
                     });
 
-                    $('input.editor-active').on('click', function () {
-                        console.log('normal change event '); // it is never shown
-                        cb = $(this).prop('checked');
-                        console.log(data);
-                    });
-                    
-                    
-                    // $('#developersTable').on('change', 'tbody input.editor-active', function () {
-                    //     console.log('delegated change event'); // it is never shown
-                    //     cb = $(this).prop('checked');
-                    //     console.log(cb)
-                    // });
-
                     $('#developersTable tbody').on( 'click', 'tr', function () {
                         $(this).toggleClass('selected');
                     } );
                 
                     $('#deleteAll').click( function () {
-                        //table.rows('.selected').remove().draw( false );
-                        var row = table.rows('.selected').data().length;
-                        var row1 = table.row(this.closest('tr')).data();
+                        table.rows('.selected').remove().draw( false );
+                        //var row = table.rows('.selected').data().length;
+                        //var row1 = table.row(this.closest('tr')).data();
                         //console.log(row1.ID);
                     } );
                 }).catch(err => {console.log(err);});
             },
+
             //Handles a change on the file upload
-            handleFileUpload(){
-                this.add.file = this.$refs.file.files[0];
+            handleFileUpload(e){
+                //console.log(e); 
+                this.add.file = e.target.files[0];
+                console.log(this.add.file);
             },
+
             addDeveloper(){
                 if( this.add.first_name == '' || this.add.last_name == '' || this.add.email == '' || this.add.phone_no == '' || this.add.address == ''){
                     return alert("Please fill-up all the fields");
@@ -245,6 +237,7 @@
                     }
                 }).catch(error => {console.log(error);});
             },
+
             viewDeveloper(id){
                 axios.get('http://localhost:8000/api/developers/'+id)
                 .then(res => {
@@ -256,6 +249,7 @@
                     this.add.address = res.data.data.address
                 }).catch(error => {console.log(error);});
             },
+
             updateDeveloper(){
                 axios.put('http://localhost:8000/api/developers/' + this.add.id, this.add)
                 .then(res => {
@@ -264,6 +258,7 @@
                     }
                 }).catch(err => {console.log(err);});
             },
+            
             deleteDeveloper(id){
                 axios.delete('http://localhost:8000/api/developers/'+id)
                 .then(res => {
