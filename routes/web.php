@@ -14,8 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    //return view('welcome');
+    return view('dashboard');
 });
+
+Route::get('/developers', function () {
+    return view('developers');
+})->middleware('auth');
 
 Auth::routes();
 
